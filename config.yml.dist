@@ -1,0 +1,6 @@
+chatId: 'CHANGEME' # https://api.telegram.org/bot<here_goes_telegram_bot_token>/getUpdates - search for [chat][id]
+telegramToken: 'CHANGEME' # ask @BotFather on Telegram
+apiToken: 'api-CHANGEME' # phabricator api token
+feedQueryUrl: 'https://CHANGE.ME/api/feed.query' # api endpoint
+phidQueryUrl: 'https://CHANGE.ME/api/phid.query' # api endpoint
+
