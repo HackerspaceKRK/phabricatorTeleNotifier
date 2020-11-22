@@ -1,5 +1,3 @@
-import re
-
 actionEmojis = {
 
 "created" : "\U0001F4A1",
