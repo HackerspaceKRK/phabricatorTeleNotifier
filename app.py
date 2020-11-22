@@ -5,6 +5,8 @@ import pickle
 import time
 import yaml
 
+from parseTxt import getEmoji, addNewlines
+
 
 with open("config.yml") as data_file:
     config = yaml.load(data_file, Loader=yaml.BaseLoader)
@@ -43,20 +45,19 @@ telegramPayload = ""
 
 
 
-for i in q['result']: 
+for i in reversed(list(q['result'])): 
 	print(q['result'][i]['text'])
 	currChrono = q['result'][i]['chronologicalKey'] 
 	if currChrono > lastChrono:
 		lastChrono = currChrono
 	objectId = q['result'][i]['objectPHID']
+	objectTxt = q['result'][i]['text']
 	phidinfo = requests.get(phidQueryUrl, data={'api.token':apiToken,'phids[0]':objectId})
 	objectUri = phidinfo.json()['result'][objectId]['uri']
 	print(objectUri)
-	telegramPayload += "----------\n" + q['result'][i]['text'] + "\nLink: " + objectUri + "\n----------\n\n"
-	time.sleep(1)
+	telegramPayload = getEmoji(objectTxt) + " " + addNewlines(objectTxt) + "\n\n\U0001F517 Link: " + objectUri
+	if(len(q['result']) > 100):
+		time.sleep(0.5)
+	tb.send_message(chatId, telegramPayload)
 	with open('lastChrono', 'wb') as fp:
 		pickle.dump(lastChrono, fp)
-
-tgSplitted = telebot.util.split_string(telegramPayload, 3000)
-for text in tgSplitted:
-	tb.send_message(chatId, text)
