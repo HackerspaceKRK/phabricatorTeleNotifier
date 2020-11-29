@@ -5,6 +5,7 @@ import pickle
 import time
 import yaml
 
+from datetime import datetime
 from parseTxt import getEmoji, addNewlines
 
 
@@ -47,15 +48,16 @@ telegramPayload = ""
 
 for i in reversed(list(q['result'])): 
 	print(q['result'][i]['text'])
-	currChrono = q['result'][i]['chronologicalKey'] 
+	currChrono = int(q['result'][i]['chronologicalKey'])
 	if currChrono > lastChrono:
 		lastChrono = currChrono
 	objectId = q['result'][i]['objectPHID']
 	objectTxt = q['result'][i]['text']
+	objectTime = datetime.fromtimestamp(q['result'][i]['epoch']).strftime("%Y-%m-%d %I:%M:%S")
 	phidinfo = requests.get(phidQueryUrl, data={'api.token':apiToken,'phids[0]':objectId})
 	objectUri = phidinfo.json()['result'][objectId]['uri']
 	print(objectUri)
-	telegramPayload = getEmoji(objectTxt) + " " + addNewlines(objectTxt) + "\n\n\U0001F517 Link: " + objectUri
+	telegramPayload = getEmoji(objectTxt) + " " + addNewlines(objectTxt) + "\n\n\U0001F517 Link: " + objectUri + "\n\U0001F4C5 Kiedy: " + objectTime
 	if(len(q['result']) > 100):
 		time.sleep(0.5)
 	tb.send_message(chatId, telegramPayload)
