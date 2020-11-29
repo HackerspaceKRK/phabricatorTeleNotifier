@@ -47,8 +47,6 @@ q = json.loads(r.content)
 
 telegramPayload = ""
 
-print(len(q['result']))
-
 ommitedMessages = 0
 
 if q['result']:
@@ -56,7 +54,6 @@ if q['result']:
 		objectId = q['result'][i]['objectPHID']
 		objectTxt = q['result'][i]['text']
 		if omitPattern.match(objectId):
-			print("Do wywalenia")
 			ommitedMessages = ommitedMessages + 1 
 		else:
 			print(q['result'][i]['text'])
@@ -65,7 +62,6 @@ if q['result']:
 				lastChrono = currChrono
 			objectTime = datetime.fromtimestamp(q['result'][i]['epoch']).strftime("%Y-%m-%d %I:%M:%S")
 			phidinfo = requests.get(phidQueryUrl, data={'api.token':apiToken,'phids[0]':objectId})
-			print(phidinfo.status_code)
 			objectUri = phidinfo.json()['result'][objectId]['uri']
 			print(objectUri)
 			telegramPayload = getEmoji(objectTxt) + " " + addNewlines(objectTxt) + "\n\n\U0001F517 Link: " + objectUri + "\n\U0001F4C5 Kiedy: " + objectTime + "\n\n" + objectId
