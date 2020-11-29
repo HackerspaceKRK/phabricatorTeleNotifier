@@ -24,7 +24,7 @@ apiToken = config['apiToken']
 feedQueryUrl = config['feedQueryUrl']
 phidQueryUrl = config['phidQueryUrl']
 
-omitPattern = re.compile(r"PHID-(PROJ|USER)-[a-z0-9]{20}")
+omitPattern = re.compile(r"PHID-(PROJ|USER|CMIT)-[a-z0-9]{20}")
 
 try:
     with open('lastChrono', 'rb') as fp:
@@ -64,7 +64,7 @@ if q['result']:
 			phidinfo = requests.get(phidQueryUrl, data={'api.token':apiToken,'phids[0]':objectId})
 			objectUri = phidinfo.json()['result'][objectId]['uri']
 			print(objectUri)
-			telegramPayload = getEmoji(objectTxt) + " " + addNewlines(objectTxt) + "\n\n\U0001F517 Link: " + objectUri + "\n\U0001F4C5 Kiedy: " + objectTime + "\n\n" + objectId
+			telegramPayload = getEmoji(objectTxt) + " " + addNewlines(objectTxt) + "\n\n\U0001F517 Link: " + objectUri + "\n\U0001F4C5 Kiedy: " + objectTime
 			if(len(q['result']) > 80):
 				time.sleep(2)
 			tb.send_message(chatId, telegramPayload)
