@@ -71,7 +71,7 @@ if q['result']:
 			with open('lastChrono', 'wb') as fp:
 				pickle.dump(lastChrono, fp)
 	if ommitedMessages > 0:
-		tb.send_message(chatId, "Pominiętych wiadomości: " + str(ommitedMessages) + " - Sprawdź na https://phabricator.hskrk.pl/feed.") 
+		tb.send_message(chatId, "Pominiętych wiadomości: " + str(ommitedMessages) + " - Sprawdź na https://phabricator.hskrk.pl/feed.", disable_notification=True) 
 
 else:
 	print("Brak nowych wiadomosci")
