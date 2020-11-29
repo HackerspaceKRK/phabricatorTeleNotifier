@@ -53,23 +53,23 @@ if q['result']:
 	for i in reversed(list(q['result'])): 
 		objectId = q['result'][i]['objectPHID']
 		objectTxt = q['result'][i]['text']
+		currChrono = int(q['result'][i]['chronologicalKey'])
+		if currChrono > lastChrono:
+			lastChrono = currChrono
 		if omitPattern.match(objectId):
 			ommitedMessages = ommitedMessages + 1 
 		else:
 			print(q['result'][i]['text'])
-			currChrono = int(q['result'][i]['chronologicalKey'])
-			if currChrono > lastChrono:
-				lastChrono = currChrono
 			objectTime = datetime.fromtimestamp(q['result'][i]['epoch']).strftime("%Y-%m-%d %I:%M:%S")
 			phidinfo = requests.get(phidQueryUrl, data={'api.token':apiToken,'phids[0]':objectId})
 			objectUri = phidinfo.json()['result'][objectId]['uri']
 			print(objectUri)
 			telegramPayload = getEmoji(objectTxt) + " " + addNewlines(objectTxt) + "\n\n\U0001F517 Link: " + objectUri + "\n\U0001F4C5 Kiedy: " + objectTime
 			if(len(q['result']) > 80):
-				time.sleep(2)
+					time.sleep(2)
 			tb.send_message(chatId, telegramPayload)
-			with open('lastChrono', 'wb') as fp:
-				pickle.dump(lastChrono, fp)
+		with open('lastChrono', 'wb') as fp:
+			pickle.dump(lastChrono, fp)
 	if ommitedMessages > 0:
 		tb.send_message(chatId, "Pominiętych wiadomości: " + str(ommitedMessages) + " - Sprawdź na https://phabricator.hskrk.pl/feed.", disable_notification=True) 
 
