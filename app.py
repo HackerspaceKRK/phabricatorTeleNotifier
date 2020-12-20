@@ -60,7 +60,7 @@ if q['result']:
 			lastChrono = currChrono
 		if omitPattern.match(objectId):
 			ommitedMessages = ommitedMessages + 1 
-		else if hardomitPattern.match(objectId):
+		elif hardomitPattern.match(objectId):
 			hardommitedMessages = hardommitedMessages + 1 
 		else:
 			print(q['result'][i]['text'])
