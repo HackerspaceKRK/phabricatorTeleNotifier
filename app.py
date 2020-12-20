@@ -24,7 +24,8 @@ apiToken = config['apiToken']
 feedQueryUrl = config['feedQueryUrl']
 phidQueryUrl = config['phidQueryUrl']
 
-omitPattern = re.compile(r"PHID-(PROJ|USER|CMIT)-[a-z0-9]{20}")
+hardomitPattern = re.compile(r"PHID-(CEVT)-[a-z0-9]{20}")
+omitPattern		= re.compile(r"PHID-(PROJ|USER|CMIT)-[a-z0-9]{20}")
 
 try:
     with open('lastChrono', 'rb') as fp:
@@ -48,6 +49,7 @@ q = json.loads(r.content)
 telegramPayload = ""
 
 ommitedMessages = 0
+hardommitedMessages = 0
 
 if q['result']:
 	for i in reversed(list(q['result'])): 
@@ -58,6 +60,8 @@ if q['result']:
 			lastChrono = currChrono
 		if omitPattern.match(objectId):
 			ommitedMessages = ommitedMessages + 1 
+		else if hardomitPattern.match(objectId):
+			hardommitedMessages = hardommitedMessages + 1 
 		else:
 			print(q['result'][i]['text'])
 			objectTime = datetime.fromtimestamp(q['result'][i]['epoch']).strftime("%Y-%m-%d %I:%M:%S")
