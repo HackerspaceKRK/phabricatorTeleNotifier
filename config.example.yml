@@ -1,0 +1,8 @@
+phabricator:
+  url: https://<PHABRICATOR_URL>/
+  token: <TOKEN> # go to settings -> Conduit API Tokens
+  poll_interval: 60s
+telegram:
+  token: <TOKEN> # go to @BotFather
+  chat_id: <CHAT_ID> # forward a message from the channel you want the noificiations to go to to  @userinfobot 
+  notify_types: ["WIKI", "TASK", "PROJ"] # can also be CEVT for events
