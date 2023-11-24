@@ -3,8 +3,8 @@ module github.com/alufers/phabricatorTeleNotifier
 go 1.19
 
 require (
-	github.com/davecgh/go-spew v1.1.1
 	github.com/go-telegram-bot-api/telegram-bot-api/v5 v5.5.1
+	github.com/gomarkdown/markdown v0.0.0-20231115200524-a660076da3fd
 	github.com/spf13/viper v1.13.0
 	github.com/uber/gonduit v0.13.0
 )

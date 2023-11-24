@@ -63,5 +63,37 @@ type PhabricatorTask struct {
 
 type ExtendedPhabricatorTask struct {
 	PhabricatorTask
-	AuthorName string
+	AuthorName          string
+	RenderedDescription any
+	ProjectNames        []string
+	IsImportant         bool
+}
+
+type GetFileInfoRequest struct {
+	ID string `json:"id"`
+	requests.Request
+}
+
+type GetFileInfoResp struct {
+	ID           string `json:"id"`
+	Phid         string `json:"phid"`
+	ObjectName   string `json:"objectName"`
+	Name         string `json:"name"`
+	MimeType     string `json:"mimeType"`
+	ByteSize     string `json:"byteSize"`
+	AuthorPHID   string `json:"authorPHID"`
+	DateCreated  string `json:"dateCreated"`
+	DateModified string `json:"dateModified"`
+	URI          string `json:"uri"`
+}
+
+type FileDownloadRequest struct {
+	requests.Request
+	Phid string `json:"phid"`
+}
+
+type FileDownloadResp struct {
+	Result    string `json:"result"`
+	ErrorCode any    `json:"error_code"`
+	ErrorInfo any    `json:"error_info"`
 }

@@ -72,6 +72,49 @@
     padding: 10px;
 }
 
+.task__project {
+    background-color: #ddd;
+    padding: 2px 5px;
+    border-radius: 3px;
+    font-size: 12px;
+    margin-right: 5px;
+}
+
+.task.important {
+    border-color: red;
+    border-width: 4px;
+    animation: blinker 3s linear infinite;
+    /* horizontal stripe */
+    background: linear-gradient(
+        90deg,
+        #fff 0px,
+        #ff000044 50px,
+        #fff 100px
+    );
+    background-position-x: -100px;
+}
+.task img {
+    max-height: 100px;
+}
+.task.important img {
+    max-height: 50vh;
+}
+
+@keyframes blinker {
+    0% {
+        border-color: red;
+        background-position-x: 0px;
+    }
+    50% {
+        border-color: transparent;
+        background-position-x: 100vw;
+    }
+    100% {
+        border-color: red;
+        background-position-x: 0px;
+    }
+}
+
 
     </style>
 </head>
@@ -80,17 +123,20 @@
         Tasks
     </div>
     {{range .}}
-        <div class="task">
+        <div class="task {{if .IsImportant}}important{{end}}">
             <div class="task_header_row">
                 <div class="task__priority" style="background: {{.PriorityColor }};">{{ .Priority }}</div>
                 <div class="task__id">#{{.ID}}</div>
 
                 <div class="task__title">{{.Title}}</div>
+                {{range.ProjectNames}}
+                    <div class="task__project">{{.}}</div>
+                {{end}}
                 <div class="task__author">Autor: {{.AuthorName}}</div>
                 
             </div>
             
-            <div class="task__description">{{.Description}}</div>
+            <div class="task__description">{{.RenderedDescription}}</div>
         </div>
     {{end}}
 
@@ -109,7 +155,7 @@
                 window.location.reload();
                 
             }
-        }, 1000 * 10);
+        }, 1000 * 60);
     </script>
 </body>
 </html>

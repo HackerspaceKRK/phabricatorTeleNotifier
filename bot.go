@@ -112,12 +112,13 @@ func main() {
 	phabricatorClient, err = gonduit.Dial(viper.GetString("phabricator.url"), &core.ClientOptions{
 		APIToken: viper.GetString("phabricator.token"),
 		Timeout:  time.Second * 20,
+		// Client:   client,
 	})
 	if err != nil {
 		log.Fatalf("Error connecting to phabricator, %s", err)
 	}
 
-	go runTaskServer()
+	runTaskServer()
 
 	telegramClient, err = tgbotapi.NewBotAPI(viper.GetString("telegram.token"))
 	if err != nil {
