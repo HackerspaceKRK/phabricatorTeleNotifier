@@ -13,6 +13,11 @@ type FeedQueryRequest struct {
 	requests.Request        // Includes __conduit__ field needed for authentication.
 }
 
+type TasksQueryRequest struct {
+	requests.Request
+	Status string `json:"status,omitempty"`
+}
+
 type FeedQueryResponseItem struct {
 	Class            string `json:"class"`
 	Epoch            int    `json:"epoch"`
@@ -32,4 +37,31 @@ type FeedItem struct {
 	ChronologicalKey string
 	Text             string `json:"text"`
 	TimeData         time.Time
+}
+
+type PhabricatorTask struct {
+	AuthorPHID         string   `json:"authorPHID"`
+	Auxiliary          []any    `json:"auxiliary"`
+	CcPHIDs            []string `json:"ccPHIDs"`
+	DateCreated        string   `json:"dateCreated"`
+	DateModified       string   `json:"dateModified"`
+	DependsOnTaskPHIDs []any    `json:"dependsOnTaskPHIDs"`
+	Description        string   `json:"description"`
+	ID                 string   `json:"id"`
+	IsClosed           bool     `json:"isClosed"`
+	ObjectName         string   `json:"objectName"`
+	OwnerPHID          string   `json:"ownerPHID"`
+	Phid               string   `json:"phid"`
+	Priority           string   `json:"priority"`
+	PriorityColor      string   `json:"priorityColor"`
+	ProjectPHIDs       []string `json:"projectPHIDs"`
+	Status             string   `json:"status"`
+	StatusName         string   `json:"statusName"`
+	Title              string   `json:"title"`
+	URI                string   `json:"uri"`
+}
+
+type ExtendedPhabricatorTask struct {
+	PhabricatorTask
+	AuthorName string
 }

@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+}
+
+.task {
+    border: 1px solid #ddd;
+    margin: 10px;
+    padding: 10px;
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.task_header_row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #ddd;
+    padding-bottom: 8px;
+    margin-bottom: 8px;
+}
+
+.task__id {
+    font-weight: bold;
+}
+
+.task__title {
+    flex-grow: 1;
+    margin-left: 10px;
+}
+
+.task__description {
+    color: #555;
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+    .task {
+        margin: 10px 0;
+    }
+}
+
+.task__priority {
+    display: inline-block;
+    padding: 2px 5px;
+    border-radius: 3px;
+    font-size: 12px;
+    margin-right: 10px;
+}
+.task__author {
+    font-size: 12px;
+    color: #555;
+}
+.header {
+    position: sticky;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 20px;
+    background-color: #fff;
+    border-bottom: 1px solid #ddd;
+    font-weight: bold;
+    padding: 10px;
+}
+
+
+    </style>
+</head>
+<body>
+    <div class="header">
+        Tasks
+    </div>
+    {{range .}}
+        <div class="task">
+            <div class="task_header_row">
+                <div class="task__priority" style="background: {{.PriorityColor }};">{{ .Priority }}</div>
+                <div class="task__id">#{{.ID}}</div>
+
+                <div class="task__title">{{.Title}}</div>
+                <div class="task__author">Autor: {{.AuthorName}}</div>
+                
+            </div>
+            
+            <div class="task__description">{{.Description}}</div>
+        </div>
+    {{end}}
+
+    <script>
+        let lastActivity = new Date().getTime();
+        document.addEventListener('scroll', () => {
+            lastActivity = new Date().getTime();
+            console.log('scroll');
+        });
+        setInterval(() => {
+            
+            const now = new Date().getTime();
+            if (now - lastActivity > 1000 * 20) {
+                // scroll to top
+                window.scrollTo(0, 0);
+                window.location.reload();
+                
+            }
+        }, 1000 * 10);
+    </script>
+</body>
+</html>
