@@ -100,6 +100,7 @@ func fetchFeed(after string) ([]FeedItem, error) {
 func main() {
 	viper.SetConfigName("config")
 	viper.SetConfigType("yaml")
+	viper.AddConfigPath("/run/secrets/")
 	viper.AddConfigPath("/etc/phabricator-tele-notifier/")
 	viper.AddConfigPath("$HOME/.config/phabricator-tele-notifier")
 	viper.AddConfigPath(".")
