@@ -118,7 +118,7 @@ func main() {
 		log.Fatalf("Error connecting to phabricator, %s", err)
 	}
 
-	runTaskServer()
+	go runTaskServer()
 
 	telegramClient, err = tgbotapi.NewBotAPI(viper.GetString("telegram.token"))
 	if err != nil {
