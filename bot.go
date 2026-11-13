@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"html"
 	"log"
 	"sort"
 	"strings"
@@ -172,7 +173,14 @@ func main() {
 				}
 			}
 
-			text := fmt.Sprintf("%s <b>%s</b>\n%s %s\nAutor: %s\nCzas: %s", emojiForTypes[v.Type], v.Title, actionEmoji, v.Text, v.Author, v.Time)
+			// Title is also a hyperlink, because bridges (e.g. Telegram -> Matrix)
+			// drop inline keyboard buttons but keep rich text links.
+			title := fmt.Sprintf("<b>%s</b>", html.EscapeString(v.Title))
+			if v.URL != "" {
+				title = fmt.Sprintf("<a href=\"%s\">%s</a>", html.EscapeString(v.URL), title)
+			}
+
+			text := fmt.Sprintf("%s %s\n%s %s\nAutor: %s\nCzas: %s", emojiForTypes[v.Type], title, actionEmoji, v.Text, v.Author, v.Time)
 
 			msg := tgbotapi.NewMessage(viper.GetInt64("telegram.chat_id"), text)
 			msg.ParseMode = "HTML"
